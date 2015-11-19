@@ -9,10 +9,10 @@ function ContractionRecorder
 %   Using the program is easy, just RUN and press ANY KEY while record the
 %   start time and stop time of one contraction.
 
-%	Written by dovecho at GMAIL dot COM
+%   Written by dovecho at GMAIL dot COM
 %   File name: ContractionRecorder.m
 %	Revision Note: First publish of the program
-%	$Version: 1.0.0.1 $	$Date: 2015-11-12 22:34:48 $
+%	$Version: 1.0.0.2 $	$Date: 2015-11-19 21:15:15 $
 
 % Recording
 recordFName = sprintf('REC_CONTRACTION_%s.txt', datestr(now, 'yyyy-mm-dd'));
@@ -25,15 +25,18 @@ diaryclearnup = onCleanup(@() set(0,'Diary','off'));
 strWait1 = 'Press ANY KEY when contraction STARTS... ';
 strWait2 = 'Press ANY KEY when contraction STOPS... ';
 
-% Start Recording
+% The program can be terminated by CTRL+C at any time, if needed. Just
+% leave the MATLAB open, and the program can be runned again, and the
+% contraction data are saved in the global varibles. 
 global iContractionRecorderCount;
 global tContractionRecorder;
 
 if isempty(iContractionRecorderCount)
-    
+%   For a fresh start of recording
     iContractionRecorderCount = 1;
     tContractionRecorder = 0;
     
+    % Welcome message
     fprintf('Welcome to CONTRACTION RECORDER!\n');
     fprintf('======================================\n');
     fprintf('WARNING!!! Be prepared for delivery before using this program!!\n\n')
