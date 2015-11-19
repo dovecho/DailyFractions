@@ -11,8 +11,8 @@ function ContractionRecorder
 
 %   Written by dovecho at GMAIL dot COM
 %   File name: ContractionRecorder.m
-%	Revision Note: First publish of the program
-%	$Version: 1.0.0.2 $	$Date: 2015-11-19 21:15:15 $
+%   Revision Note: First publish of the program
+%   $Version: 1.0.0.2 $	$Date: 2015-11-19 21:15:15 $
 
 % Recording
 recordFName = sprintf('REC_CONTRACTION_%s.txt', datestr(now, 'yyyy-mm-dd'));
