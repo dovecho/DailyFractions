@@ -8,37 +8,11 @@ global G;
 global N;
 global R;
 G = 100;
-N = 5;
+N = 8;
 R = zeros(N,N);
 
 %% Main Iteration
-CorePirate(1);
-    
-%% Output
-
-if checkresult() == 1
-    fprintf('Plan generated!\n')
-    printLine(N);
-    printHead(N)
-    printLine(N);
-    printResult(R,N)
-    printLine(N);
-    printData(R,N)
-    printLine(N);
-else
-    printResult(R,N);
-    error('PIRATEGOLD: Found inconsistency!\n')
-
-end
-
-end
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function CorePirate(m)
-global G;
-global N;
-global R;
-
+for m = 1 : N
     switch m
         case 1
             R(N,N) = G;
@@ -69,17 +43,42 @@ global R;
                 NewDistribution = (m)/2;
             end
             
-            GoldRemain = G - sum(R(N-m+2, (N-m+3:N))) - NewDistribution + sum(R(N-m+2, ((N-m+2)+ind(NewDistribution+1:end))));
+            
+            % Plan A REF[2]
+               R(N-m+1, ((N-m+2)+ind(1:NewDistribution))) = R(N-m+2, ((N-m+2)+ind(1:NewDistribution))) + 1;% plan A
+               GoldRemain = G - sum(R(N-m+2, (N-m+3:N))) - NewDistribution + sum(R(N-m+2, ((N-m+2)+ind(NewDistribution+1:end))));
+            
+%            %% Plan B REF[1]
+%             for jj = 1 : NewDistribution
+%                 if R(N-m+2, ((N-m+2)+ind(jj))) == 0
+%                     R(N-m+1, ((N-m+2)+ind(jj))) = R(N-m+2, ((N-m+2)+ind(jj))) + 1;
+%                 else
+%                     R(N-m+1, ((N-m+2)+ind(jj))) = R(N-m+2, ((N-m+2)+ind(jj)));
+%                 end
+%             end
+%             GoldRemain = G - sum(R(N-m+1, (N-m+3:N)));
 
-            R(N-m+1, N-m+1) = GoldRemain; % N-i+1 表示倒数第i个
-            R(N-m+1, ((N-m+2)+ind(1:NewDistribution))) = R(N-m+2, ((N-m+2)+ind(1:NewDistribution))) + 1;
-
-    end
-    if m<N
-        CorePirate(m+1);
+            R(N-m+1, N-m+1) = GoldRemain; % N-m+1 表示倒数第i个
     end
 end
+%% Output
 
+if checkresult() == 1
+    fprintf('Plan generated!\n')
+    printLine(N);
+    printHead(N)
+    printLine(N);
+    printResult(R,N)
+    printLine(N);
+    printData(R,N)
+    printLine(N);
+else
+    printResult(R,N);
+    error('PIRATEGOLD: Found inconsistency!\n')
+
+end
+
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function printLine(N)
